@@ -32,6 +32,7 @@ server:
       max: 800
       # Tomcat启动初始化的线程数，默认值10
       min-spare: 100
+#  address: 192.168.96.1
 
 # 日志配置
 logging:
