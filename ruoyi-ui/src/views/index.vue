@@ -2,7 +2,6 @@
 	<div class="app-container home">
     <ul>系统监控</ul>
     <ul>
-      <li>定时任务</li>
       <li>数据监控</li>
     </ul>
     <ul>系统管理</ul>

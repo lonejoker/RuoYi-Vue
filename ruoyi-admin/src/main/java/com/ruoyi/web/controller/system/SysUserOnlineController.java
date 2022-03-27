@@ -1,4 +1,4 @@
-package com.ruoyi.web.controller.monitor;
+package com.ruoyi.web.controller.system;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,7 +29,7 @@ import com.ruoyi.system.service.ISysUserOnlineService;
  * @author ruoyi
  */
 @RestController
-@RequestMapping("/monitor/online")
+@RequestMapping("/system/online")
 public class SysUserOnlineController extends BaseController
 {
     @Autowired

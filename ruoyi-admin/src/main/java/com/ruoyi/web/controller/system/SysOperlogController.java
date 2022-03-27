@@ -1,4 +1,4 @@
-package com.ruoyi.web.controller.monitor;
+package com.ruoyi.web.controller.system;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +25,7 @@ import com.ruoyi.system.service.ISysOperLogService;
  * @author ruoyi
  */
 @RestController
-@RequestMapping("/monitor/operlog")
+@RequestMapping("/system/operlog")
 public class SysOperlogController extends BaseController
 {
     @Autowired
