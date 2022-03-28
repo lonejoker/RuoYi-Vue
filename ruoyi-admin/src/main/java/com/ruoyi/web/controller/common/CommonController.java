@@ -83,7 +83,7 @@ public class CommonController
             String fileName = FileUploadUtils.upload(filePath, file);
             long size = file.getSize();
             //System.out.println(size);
-            //String url = serverConfig.getUrl() + fileName;
+            String url = serverConfig.getUrl() + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("url", url);
             ajax.put("size", size);
