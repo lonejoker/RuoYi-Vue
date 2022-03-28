@@ -6,7 +6,6 @@
       <li>部门管理</li>
     </ul>
     <ul>改造部门</ul>
-    <ul>添加文件管理</ul>
 	</div>
 </template>
 

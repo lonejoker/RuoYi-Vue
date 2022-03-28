@@ -2,7 +2,12 @@
 	<div class="app-container">
 		<el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
 			<el-form-item label="文件名" prop="name">
-				<el-input v-model="queryParams.name" placeholder="请输入文件名" clearable @keyup.enter.native="handleQuery" />
+				<el-input v-model="queryParams.name" placeholder="请输入文件名" @clear="queryClear" clearable @keyup.enter.native="handleQuery" />
+			</el-form-item>
+			<el-form-item label="文件类型" prop="type">
+				<el-select v-model="queryParams.type" placeholder="请选择文件类型" clearable @clear="queryClear">
+					<el-option v-for="dict in dict.type.sys_resources_type" :key="dict.value" :label="dict.label" :value="dict.label" />
+				</el-select>
 			</el-form-item>
 			<el-form-item>
 				<el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -24,30 +29,17 @@
 			</el-col>
 			<right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
 		</el-row>
-		<el-table border v-loading="loading" :data="resourcesList" @selection-change="handleSelectionChange">
+		<el-table v-loading="loading" :data="resourcesList" @selection-change="handleSelectionChange">
 			<el-table-column type="selection" width="55" align="center" />
-			<el-table-column label="文件id" align="center" prop="id" width="90px" />
+			<el-table-column label="文件id" align="center" prop="id" width="70px" />
 			<el-table-column label="文件名" align="center" prop="name" />
-			<el-table-column label="文件链接" align="center" prop="url" width="200px" />
-			<el-table-column label="文件类型" align="center" prop="type" width="110px" />
-			<el-table-column label="文件大小" align="center" prop="size" width="130px" />
-			<el-table-column label="创建者" align="center" prop="createBy">
-				<!-- <template slot-scope="scope">
-          <dict-tag :options="dict.type.${column.dictType}" :value="scope.row.createBy"/>
-        </template> -->
-			</el-table-column>
-			<el-table-column label="创建时间" align="center" prop="createTime" width="180">
-				<!-- <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
-        </template> -->
-			</el-table-column>
-			<el-table-column label="更新者" align="center" prop="updateBy">
-			</el-table-column>
-			<el-table-column label="更新时间" align="center" prop="updateTime" width="180">
-				<!-- <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
-        </template> -->
-			</el-table-column>
+			<el-table-column label="文件链接" align="center" prop="url" width="300px" />
+			<el-table-column label="文件类型" align="center" prop="type" width="80px" />
+			<el-table-column label="文件大小" align="center" prop="size" />
+			<el-table-column label="创建者" align="center" prop="createBy" />
+			<el-table-column label="创建时间" align="center" prop="createTime" width="170" />
+			<el-table-column label="更新者" align="center" prop="updateBy" />
+			<el-table-column label="更新时间" align="center" prop="updateTime" width="170" />
 			<el-table-column label="操作" align="center" class-name="small-padding fixed-width">
 				<template slot-scope="scope">
 					<el-button size="mini" type="text" icon="el-icon-edit" @click="handleDownload(scope.row)">下载</el-button>
@@ -64,8 +56,8 @@
 				<el-form-item prop="name"></el-form-item>
 				<el-form-item prop="size"></el-form-item>
 				<el-form-item label="文件链接" prop="url">
-					<el-upload ref="upload" :limit="2"  :action="upload.url" :headers="upload.headers" :file-list="upload.fileList" :on-progress="handleFileUploadProgress"
-						:on-success="handleFileSuccess" :auto-upload="false" :on-change="onchange" :before-upload="beforeAvatarUpload">
+					<el-upload ref="upload" :limit="2" :action="upload.url" :headers="upload.headers" :file-list="upload.fileList" :on-progress="handleFileUploadProgress" :on-success="handleFileSuccess"
+						:auto-upload="false" :on-change="onchange" :before-upload="beforeAvatarUpload">
 						<el-button slot="trigger" size="small" type="primary">选取文件</el-button>
 						<el-button style="margin-left: 10px;" size="small" type="success" :loading="upload.isUploading" @click="submitUpload">上传到服务器</el-button>
 						<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -85,6 +77,7 @@ import { listResources, getResources, getResourceMd5, delResources, addResources
 import { getToken } from "@/utils/auth";
 export default {
 	name: "Resources",
+	dicts: ['sys_resources_type'],
 	data () {
 		return {
 			// 遮罩层
@@ -109,7 +102,6 @@ export default {
 			queryParams: {
 				pageNum: 1,
 				pageSize: 10,
-				id: null,
 				name: null,
 				url: null,
 				type: null,
@@ -178,6 +170,10 @@ export default {
 		resetQuery () {
 			this.resetForm("queryForm");
 			this.handleQuery();
+		},
+		// 清除时触发
+		queryClear () {
+			this.resetQuery()
 		},
 		// 多选框选中数据
 		handleSelectionChange (selection) {
@@ -270,8 +266,8 @@ export default {
 		},
 		// 文件下载处理
 		handleDownload (row) {
-		var name = row.name+"."+row.type;
-		this.$download.saveAs(row.url, name);
+			var name = row.name + "." + row.type;
+			this.$download.saveAs(row.url, name);
 		}
 	}
 };
