@@ -65,8 +65,6 @@ public class SysResourcesController extends BaseController {
     @Log(title = "资源管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SysResources sysResources) throws Exception {
-        // TODO：返回结果
-        //sysResourcesService.insertSysResources(sysResources);
         return sysResourcesService.insertSysResources(sysResources);
     }
 
@@ -77,7 +75,7 @@ public class SysResourcesController extends BaseController {
     @Log(title = "资源管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SysResources sysResources) {
-        return toAjax(sysResourcesService.updateSysResources(sysResources));
+        return sysResourcesService.updateSysResources(sysResources);
     }
 
     /**

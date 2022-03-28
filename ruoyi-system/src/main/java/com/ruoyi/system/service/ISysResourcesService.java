@@ -41,7 +41,7 @@ public interface ISysResourcesService {
      * @param sysResources 资源管理
      * @return 结果
      */
-    public int updateSysResources(SysResources sysResources);
+    public AjaxResult updateSysResources(SysResources sysResources);
 
     /**
      * 批量删除资源管理

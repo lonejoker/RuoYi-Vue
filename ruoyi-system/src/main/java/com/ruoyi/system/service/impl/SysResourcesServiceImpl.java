@@ -57,16 +57,10 @@ public class SysResourcesServiceImpl implements ISysResourcesService {
         SysResources fileMd5 = getFileMd5(md5);
         //System.out.println(fileMd5);
         if (fileMd5 != null) {
-            return AjaxResult.error(412, "该文件已存在");
+            return AjaxResult.error(412, "该文件已存在，不能添加");
         }
         sysResources.setMd5(md5);
         sysResources.setName(sysResources.getName().substring(0, sysResources.getName().indexOf(".")));
-        //System.out.println(sysResources);
-        //System.out.println(md5);
-        //System.out.println(sysResources.getName());
-        //System.out.println(sysResources.getName().substring(0, sysResources.getName().indexOf(".")));
-        //System.out.println(sysResources.getUrl().substring(sysResources.getUrl().lastIndexOf('/')+1));
-        //return 0;
         int resources = sysResourcesMapper.insertSysResources(sysResources);
         return AjaxResult.success(resources);
     }
@@ -84,10 +78,21 @@ public class SysResourcesServiceImpl implements ISysResourcesService {
      * @return 结果
      */
     @Override
-    public int updateSysResources(SysResources sysResources) {
+    public AjaxResult updateSysResources(SysResources sysResources) {
+        System.out.println(sysResources);
         sysResources.setUpdateTime(DateUtils.getNowDate());
         sysResources.setUpdateBy(SecurityUtils.getUsername());
-        return sysResourcesMapper.updateSysResources(sysResources);
+        sysResources.setType(sysResources.getUrl().substring(sysResources.getUrl().lastIndexOf('.') + 1));
+        String md5 = SecureUtil.md5(sysResources.getName());
+        SysResources fileMd5 = getFileMd5(md5);
+        if (fileMd5 != null) {
+            return AjaxResult.error(412, "该文件已存在，不能修改");
+        }
+        sysResources.setMd5(md5);
+        sysResources.setSize(sysResources.getSize() / 1024);
+        sysResources.setName(sysResources.getName().substring(0, sysResources.getName().indexOf(".")));
+        int resources = sysResourcesMapper.updateSysResources(sysResources);
+        return AjaxResult.success(resources);
     }
 
     /**
