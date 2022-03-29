@@ -9,9 +9,15 @@ import com.ruoyi.common.annotation.Excel;
 #if($table.crud || $table.sub)
 import com.ruoyi.common.core.domain.BaseEntity;
 #elseif($table.tree)
-import com.ruoyi.common.core.domain.TreeEntity;
 #end
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
+import java.util.Date;
+import java.util.List;
 /**
  * @author 终于白发始于青丝
  * @create ${datetime}
@@ -19,13 +25,16 @@ import com.ruoyi.common.core.domain.TreeEntity;
  * @ClassName ${ClassName}
  * @Description 类方法说明：${functionName}实体类
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("${tableName}")
 #if($table.crud || $table.sub)
-#set($Entity="BaseEntity")
+    #set($Entity="BaseEntity")
 #elseif($table.tree)
-#set($Entity="TreeEntity")
+    #set($Entity="TreeEntity")
 #end
-public class ${ClassName} extends ${Entity}
-{
+public class ${ClassName} extends ${Entity} {
     private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
@@ -54,37 +63,6 @@ public class ${ClassName} extends ${Entity}
 #if($table.sub)
     /** $table.subTable.functionName信息 */
     private List<${subClassName}> ${subclassName}List;
-
-#end
-#foreach ($column in $columns)
-#if(!$table.isSuperColumn($column.javaField))
-#if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
-#set($AttrName=$column.javaField)
-#else
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-#end
-    public void set${AttrName}($column.javaType $column.javaField) 
-    {
-        this.$column.javaField = $column.javaField;
-    }
-
-    public $column.javaType get${AttrName}() 
-    {
-        return $column.javaField;
-    }
-#end
-#end
-
-#if($table.sub)
-    public List<${subClassName}> get${subClassName}List()
-    {
-        return ${subclassName}List;
-    }
-
-    public void set${subClassName}List(List<${subClassName}> ${subclassName}List)
-    {
-        this.${subclassName}List = ${subclassName}List;
-    }
 
 #end
     @Override
