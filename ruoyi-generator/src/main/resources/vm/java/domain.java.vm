@@ -13,10 +13,11 @@ import com.ruoyi.common.core.domain.TreeEntity;
 #end
 
 /**
- * ${functionName}对象 ${tableName}
- * 
- * @author ${author}
- * @date ${datetime}
+ * @author 终于白发始于青丝
+ * @create ${datetime}
+ * @Version 1.0
+ * @ClassName ${ClassName}
+ * @Description 类方法说明：${functionName}实体类
  */
 #if($table.crud || $table.sub)
 #set($Entity="BaseEntity")
@@ -40,7 +41,7 @@ public class ${ClassName} extends ${Entity}
 #if($parentheseIndex != -1)
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
 #elseif($column.javaType == 'Date')
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @Excel(name = "${comment}", width = 30, dateFormat = "yyyy-MM-dd")
 #else
     @Excel(name = "${comment}")

@@ -7,10 +7,11 @@ import ${packageName}.domain.${subClassName};
 #end
 
 /**
- * ${functionName}Mapper接口
- * 
- * @author ${author}
- * @date ${datetime}
+ * @author 终于白发始于青丝
+ * @create ${datetime}
+ * @Version 1.0
+ * @ClassName ${ClassName}Mapper
+ * @Description 类方法说明：${functionName}
  */
 public interface ${ClassName}Mapper 
 {

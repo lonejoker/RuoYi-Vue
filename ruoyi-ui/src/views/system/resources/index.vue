@@ -33,9 +33,13 @@
 			<el-table-column type="selection" width="55" align="center" />
 			<el-table-column label="文件id" align="center" prop="id" width="70px" />
 			<el-table-column label="文件名" align="center" prop="name" />
-			<el-table-column label="文件链接" align="center" prop="url" width="300px" />
+			<el-table-column label="文件链接" align="center" prop="url" width="300px">
+				<!-- <template slot-scope="scope">
+					<el-button type="primary" @click="preview(scope.row.url)">预览</el-button>
+				</template> -->
+			</el-table-column>
 			<el-table-column label="文件类型" align="center" prop="type" width="80px" />
-			<el-table-column label="文件大小" align="center" prop="size" />
+			<el-table-column label="文件大小(mb)" align="center" prop="size" />
 			<el-table-column label="创建者" align="center" prop="createBy" />
 			<el-table-column label="创建时间" align="center" prop="createTime" width="170" />
 			<el-table-column label="更新者" align="center" prop="updateBy" />
@@ -268,7 +272,13 @@ export default {
 		handleDownload (row) {
 			var name = row.name + "." + row.type;
 			this.$download.saveAs(row.url, name);
-		}
+		},
+		// 预览
+		preview (url) {
+			window.open('http://127.0.0.1:8012/onlinePreview?url=' + encodeURIComponent(window.btoa(url)));
+			// window.open('https://file.keking.cn/onlinePreview?url=' + encodeURIComponent(window.btoa((url))));
+			// https://gitee.com/kekingcn/file-online-preview?_from=gitee_search#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B
+		},
 	}
 };
 </script>

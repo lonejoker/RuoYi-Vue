@@ -4,10 +4,11 @@ import java.util.List;
 import ${packageName}.domain.${ClassName};
 
 /**
- * ${functionName}Service接口
- * 
- * @author ${author}
- * @date ${datetime}
+ * @author 终于白发始于青丝
+ * @create ${datetime}
+ * @Version 1.0
+ * @ClassName ${ClassName}Service
+ * @Description 类方法说明：${functionName}
  */
 public interface I${ClassName}Service 
 {

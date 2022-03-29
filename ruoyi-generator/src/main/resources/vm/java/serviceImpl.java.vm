@@ -20,10 +20,11 @@ import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
 
 /**
- * ${functionName}Service业务层处理
- * 
- * @author ${author}
- * @date ${datetime}
+ * @author 终于白发始于青丝
+ * @create ${datetime}
+ * @Version 1.0
+ * @ClassName ${ClassName}ServiceImpl
+ * @Description 类方法说明：${functionName}
  */
 @Service
 public class ${ClassName}ServiceImpl implements I${ClassName}Service 
